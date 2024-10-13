@@ -1,4 +1,3 @@
-# face_detection.py
 
 import cv2
 import sys
@@ -44,3 +43,9 @@ class FaceDetector:
 
         self.camera.release()
         cv2.destroyAllWindows()
+    
+    def toggle_detection(self):
+        if self.is_running:
+            self.stop()
+        else:
+            self.start()

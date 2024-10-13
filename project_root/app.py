@@ -15,7 +15,7 @@ def video_feed():
 @app.route('/toggle_face_detection')
 def toggle_face_detection():
     face_detector.toggle_detection()  # Toggle face detection on/off
-    return 'Face detection toggled'
+    return f'Face detection toggled: {face_detector.is_detection_enabled()}'
 
 @app.route('/')
 def index():
