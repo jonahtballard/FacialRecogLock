@@ -19,8 +19,12 @@ def toggle_face_detection():
 
 @app.route('/')
 def index():
-    return '<h1>Camera Stream</h1><img src="/video_feed">' 
-'<p><a href="/toggle_face_detection">Toggle Face Detection</a></p>'
+    # Correctly return the full HTML content
+    return '''
+    <h1>Camera Stream</h1>
+    <img src="/video_feed" alt="Camera Feed">
+    <p><a href="/toggle_face_detection">Toggle Face Detection</a></p>
+    '''
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=5000)
