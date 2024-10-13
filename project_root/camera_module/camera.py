@@ -3,7 +3,7 @@
 import cv2
 
 class Camera:
-    def __init__(self, camera_index=0):
+    def __init__(self, camera_index=1):
         self.camera_index = camera_index
         self.capture = cv2.VideoCapture(self.camera_index)
 
