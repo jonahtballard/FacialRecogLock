@@ -10,6 +10,14 @@ from facial_recognition.face_detection import FaceDetector  # Import the FaceDet
 app = Flask(__name__)
 detector = FaceDetector()
 
+@app.route('/video_feed')
+def video_feed():
+    return Response(camera.generate_frames(),
+                    mimetype='multipart/x-mixed-replace; boundary=frame')
+@app.route('/')
+def index():
+    return '<h1>Camera Stream</h1><img src="/video_feed">'
+
 @app.route('/')
 def index():
     return render_template('index.html')  # Create a template to control the detection
