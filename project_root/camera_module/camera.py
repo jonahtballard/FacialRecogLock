@@ -9,32 +9,17 @@ class Camera:
             print(f"Error: Could not open camera with index {self.camera_index}")
             raise Exception("Camera not accessible.")
 
-    def start(self):
+    def generate_frames(self):
         while True:
-            # Capture frame-by-frame
-            ret, frame = self.capture.read()
-
-            if not ret:
-                print("Error: Could not read frame.")
+            success, frame = self.capture.read()  # Capture frame-by-frame
+            if not success:
                 break
-
-            # Display the resulting frame
-            cv2.imshow('Camera Feed', frame)
-
-            # Press 'q' to exit
-            if cv2.waitKey(1) & 0xFF == ord('q'):
-                break
+            else:
+                # Encode the frame in JPEG format
+                _, buffer = cv2.imencode('.jpg', frame)
+                frame = buffer.tobytes()
+                yield (b'--frame\r\n'
+                       b'Content-Type: image/jpeg\r\n\r\n' + frame + b'\r\n')
 
     def release(self):
-        # When everything is done, release the capture
         self.capture.release()
-        cv2.destroyAllWindows()
-
-if __name__ == "__main__":
-    cam = Camera()
-    try:
-        cam.start()
-    except Exception as e:
-        print(e)
-    finally:
-        cam.release()
