@@ -5,8 +5,7 @@ from facial_recognition.face_detection import FaceDetector  # Import the FaceDet
 
 app = Flask(__name__)
 camera = Camera()  # Initialize the camera
-
-#face_detector = FaceDetector()  # Initialize the face detector
+face_detector = FaceDetector()  # Initialize the face detector
 
 @app.route('/video_feed')
 def video_feed():
