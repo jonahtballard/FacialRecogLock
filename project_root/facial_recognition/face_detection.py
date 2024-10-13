@@ -1,16 +1,13 @@
-
 import cv2
-import sys
-import os
 import threading
-import time  # Import time for sleep control
-from camera_module.camera import Camera  # Import the Camera class
+from camera_module.camera import Camera
 
 class FaceDetector:
     def __init__(self):
-        self.camera = None
+        self.camera = Camera()
         self.face_cascade = cv2.CascadeClassifier('haarcascade_frontalface_default.xml')
         self.is_running = False
+        self.frame_with_faces = None  # Store the frame with detected faces
 
     def start(self):
         try:
@@ -37,15 +34,18 @@ class FaceDetector:
             for (x, y, w, h) in faces:
                 cv2.rectangle(frame, (x, y), (x+w, y+h), (0, 255, 0), 2)
 
-            cv2.imshow('Face Detection', frame)
-            if cv2.waitKey(1) & 0xFF == ord('q'):
-                break
+            self.frame_with_faces = frame  # Store the frame with detected faces
 
         self.camera.release()
-        cv2.destroyAllWindows()
-    
+
     def toggle_detection(self):
         if self.is_running:
             self.stop()
         else:
             self.start()
+
+    def is_detection_enabled(self):
+        return self.is_running
+
+    def get_frame_with_faces(self):
+        return self.frame_with_faces
