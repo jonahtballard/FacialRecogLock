@@ -9,13 +9,13 @@ camera_module_path = os.path.abspath(os.path.join(os.path.dirname(__file__), '..
 if camera_module_path not in sys.path:
     sys.path.append(camera_module_path)
 
-from camera import Camera  # Import the Camera class
+from camera import Camera  # Import the Camera class from the camera module
 
 class FaceDetector:
     def __init__(self):
         self.face_cascade = cv2.CascadeClassifier('haarcascade_frontalface_default.xml')
         self.eye_cascade = cv2.CascadeClassifier('haarcascade_eye.xml')
-        self.camera = Camera()
+        self.camera = Camera()  # Instantiate the Camera class
         self.running = False
 
     def start_detection(self):
