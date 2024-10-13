@@ -2,14 +2,13 @@ import cv2
 import sys
 import os
 import threading
-import time
 
 # Ensure the path to the camera_module is correctly set
 camera_module_path = os.path.abspath(os.path.join(os.path.dirname(__file__), '../camera_module'))
 if camera_module_path not in sys.path:
     sys.path.append(camera_module_path)
 
-from camera import Camera  # Import the Camera class from the camera module
+from camera import Camera  # Import the Camera class
 
 class FaceDetector:
     def __init__(self):
@@ -20,7 +19,6 @@ class FaceDetector:
 
     def start_detection(self):
         self.running = True
-        self.camera.start()  # Start the camera capture
         while self.running:
             ret, frame = self.camera.capture.read()  # Read frames from the camera
 
