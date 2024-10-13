@@ -1,5 +1,11 @@
+import sys
+import os
+
+# Add the project root directory to sys.path
+sys.path.append(os.path.abspath(os.path.dirname(__file__)))
+
 from flask import Flask, Response, render_template, redirect, url_for
-from face_detection import FaceDetector  # Import the FaceDetector class
+from facial_recognition.face_detection import FaceDetector  # Import the FaceDetector class from the facial_recognition directory
 
 app = Flask(__name__)
 detector = FaceDetector()
