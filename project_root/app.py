@@ -16,7 +16,7 @@ if camera_module_path not in sys.path:
 from camera import Camera  # Import the Camera class
 
 # Ensure the path to the face_detection_module is correctly set
-face_detection_module_path = os.path.abspath(os.path.join(os.path.dirname(__file__), 'face_detection_module'))
+face_detection_module_path = os.path.abspath(os.path.join(os.path.dirname(__file__), 'facial_recognition'))
 if face_detection_module_path not in sys.path:
     sys.path.append(face_detection_module_path)
 
