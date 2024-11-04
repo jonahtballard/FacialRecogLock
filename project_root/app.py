@@ -1,35 +1,49 @@
-from flask import Flask, Response
-from camera_module.camera import Camera  # Import the Camera class
-from facial_recognition.face_detection import FaceDetector  # Import the FaceDetector class
+from flask import Flask, Response, render_template
+import cv2
 
 app = Flask(__name__)
-camera = Camera()  # Initialize the camera
-face_detector = FaceDetector()  # Initialize the face detector
 
-@app.route('/video_feed')
-def video_feed():
+# Initialize the camera
+camera = cv2.VideoCapture(0)
+
+# Load the Haar Cascade for face detection
+face_cascade = cv2.CascadeClassifier(cv2.data.haarcascades + 'haarcascade_frontalface_default.xml')
+
+def generate_frames():
     while True:
-        if face_detector.is_detection_enabled() and face_detector.get_frame_with_faces() is not None:
-            frame = face_detector.get_frame_with_faces()
+        success, frame = camera.read()
+        if not success:
+            break
+        
+        # Convert the frame to grayscale for face detection
+        gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
+        
+        # Detect faces
+        faces = face_cascade.detectMultiScale(gray, scaleFactor=1.1, minNeighbors=5)
+
+        # Draw rectangles around faces
+        if len(faces) > 0:
+            for (x, y, w, h) in faces:
+                cv2.rectangle(frame, (x, y), (x + w, y + h), (0, 255, 0), 2)  # Green box for recognized faces
         else:
-            ret, frame = camera.read()  # Read the frame from the camera
-        _, buffer = cv2.imencode('.jpg', frame)
-        frame = buffer.tobytes()
+            cv2.putText(frame, "No face detected", (10, 30), cv2.FONT_HERSHEY_SIMPLEX, 1, (0, 0, 255), 2)  # Red text if no face
+
+        # Encode the frame in JPEG format
+        ret, buffer = cv2.imencode('.jpg', frame)
+        frame = buffer.tobytes()  # Convert to bytes
+        # Yield the frame in the required format for streaming
         yield (b'--frame\r\n'
                b'Content-Type: image/jpeg\r\n\r\n' + frame + b'\r\n')
 
-@app.route('/toggle_face_detection')
-def toggle_face_detection():
-    face_detector.toggle_detection()  # Toggle face detection on/off
-    return f'Face detection toggled: {face_detector.is_detection_enabled()}'
-
 @app.route('/')
 def index():
-    return '''
-    <h1>Camera Stream</h1>
-    <img src="/video_feed" alt="Camera Feed">
-    <p><a href="/toggle_face_detection">Toggle Face Detection</a></p>
-    '''
+    return render_template('index.html')
+
+@app.route('/video_feed')
+def video_feed():
+    return Response(generate_frames(),
+                    mimetype='multipart/x-mixed-replace; boundary=frame')
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=5000)
+
