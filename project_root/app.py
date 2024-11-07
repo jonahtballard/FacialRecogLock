@@ -34,8 +34,8 @@ def video():
 
 @app.route('/')
 def index():
-    return 'image:<br><img src="/video">'
-    #return render_template_string('image:<br><img src="{{ url_for("video") }}">')
+    #return 'image:<br><img src="/video">'
+    return render_template_string('image:<br><img src="{{ url_for("video") }}">')
 
 if __name__ == "__main__":
     app.run(debug=True)#, use_reloader=False)
