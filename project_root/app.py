@@ -1,41 +1,46 @@
-from flask import Flask, Response, render_template_string, request
-import time
+from flask import Flask, render_template, Response, redirect, url_for, request
+import os
+from realtime import load_encodings_from_db, generate_frames
+import subprocess
 
 app = Flask(__name__)
 
-frame = None   # global variable to keep single JPG, 
-               # at start you could assign bytes from empty JPG
+# Ensure that the 'images' folder exists
+image_folder = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'images')
+os.makedirs(image_folder, exist_ok=True)
 
-@app.route('/upload', methods=['PUT'])
-def upload():
-    global frame
-    
-    # keep jpg data in global variable
-    frame = request.data
-    
-    return "OK"
-
-def gen():
-    while True:
-        yield (b'--frame\r\n'
-               b'Content-Type: image/jpeg\r\n'
-               b'\r\n' + frame + b'\r\n')
-        time.sleep(0.04) # my Firefox needs some time to display image / Chrome displays image without it 
-                         # 0.04s = 40ms = 25 frames per second 
-
-        
-@app.route('/video')
-def video():
-    if frame:
-        # if you use `boundary=other_name` then you have to yield `b--other_name\r\n`
-        return Response(gen(), mimetype='multipart/x-mixed-replace; boundary=frame')
-    else:
-        return ""
+# Load known encodings
+known_face_encodings, known_face_names = load_encodings_from_db()
 
 @app.route('/')
-def index():
-    #return 'image:<br><img src="/video">'
-    return render_template_string('image:<br><img src="{{ url_for("video") }}">')
+def home():
+    return render_template('home.html')
+
+@app.route('/video_feed')
+def video_feed():
+    return Response(generate_frames(known_face_encodings, known_face_names), mimetype='multipart/x-mixed-replace; boundary=frame')
+
+@app.route('/start_video')
+def start_video():
+    return render_template('video.html')
+
+@app.route('/upload_image', methods=['GET', 'POST'])
+def upload_image():
+    if request.method == 'POST':
+        image_file = request.files['image']
+        if image_file:
+            # Save the image to the images directory
+            image_path = os.path.join(image_folder, image_file.filename)
+            image_file.save(image_path)
+            print(f"Image uploaded: {image_path}")
+            subprocess.run(['python3', 'db.py'])
+
+            return redirect(url_for('home'))
+    return render_template('upload.html')
+
+@app.route('/back_to_home')
+def back_to_home():
+    return redirect(url_for('home'))
 
 if __name__ == "__main__":
-    app.run(debug=True)#, use_reloader=False)
+    app.run(debug=True)
