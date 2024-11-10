@@ -2,12 +2,14 @@ import face_recognition
 import cv2
 import sqlite3
 import numpy as np
+import os
 
 
 
 # Load encodings from the database
 def load_encodings_from_db():
-    conn = sqlite3.connect('/Users/jonahballard/Documents/Computer-Orginization-Project1/project_root/facial_encodings.db')
+    db_path = os.path.join(os.getcwd(), 'facial_encodings.db')
+    conn = sqlite3.connect(db_path)
     cursor = conn.cursor()
     cursor.execute('SELECT image_name, encoding FROM encodings')
     data = cursor.fetchall()

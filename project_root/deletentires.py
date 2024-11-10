@@ -1,7 +1,8 @@
 import os
 import subprocess
 
-folder_path = "/Users/jonahballard/Documents/Computer-Orginization-Project1/project_root/images/"
+folder_path = "images/"
+
 
 def delete_images():
     # Get a list of all files in the folder
