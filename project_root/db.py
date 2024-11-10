@@ -20,8 +20,13 @@ cursor.execute('''
     )
 ''')
 
-# Clear old encodings and insert new ones
-cursor.execute('DELETE FROM encodings')
+def clear_db():
+    cursor.execute('DELETE FROM encodings')
+    conn.commit()
+    print("All encodings cleared from the database.")
+
+
+clear_db()
 
 for filename in os.listdir(folder_path):
     if filename.lower().endswith(('.png', '.jpg', '.jpeg')):

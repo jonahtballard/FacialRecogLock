@@ -2,10 +2,8 @@ import face_recognition
 import cv2
 import sqlite3
 import numpy as np
-import os
-import subprocess
 
-subprocess.run(['python3', 'db.py'])
+
 
 # Load encodings from the database
 def load_encodings_from_db():

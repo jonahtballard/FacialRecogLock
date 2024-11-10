@@ -9,7 +9,17 @@
     <h1>Welcome to the Home Page</h1>
 
     <button onclick="location.href='{{ url_for('start_video') }}'">Start Video Feed</button>
-    <button onclick="location.href='{{ url_for('upload_image') }}'">Upload Image</button>  <!-- New button to upload images -->
+    <button onclick="location.href='{{ url_for('upload_image') }}'">Upload Image</button> 
+
+    <!-- Logout Button -->
+    <a href="{{ url_for('logout') }}">
+        <button>Logout</button>
+    </a>
+
+    <a href="{{ url_for('clear_database') }}">
+        <button>Clear Facial Encodings</button>
+    </a>
+
 
 </body>
 </html>
