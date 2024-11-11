@@ -1,8 +1,6 @@
-import sqlite3
 from flask import Flask, flash, render_template, Response, redirect, session, url_for, request
 import os
 import subprocess
-import time
 from realtime import load_encodings_from_db, generate_frames
 
 
@@ -20,20 +18,6 @@ os.makedirs(image_folder, exist_ok=True)
 
 # Global variables to store the encodings and names
 known_face_encodings, known_face_names = load_encodings_from_db()
-last_updated = time.time()
-
-# Function to update encodings
-def refresh_encodings():
-    global known_face_encodings, known_face_names, last_updated
-    known_face_encodings, known_face_names = load_encodings_from_db()
-    last_updated = time.time()
-
-# Use before_request to check if 30 seconds have passed
-@app.before_request
-def check_for_encoding_refresh():
-    global last_updated
-    if time.time() - last_updated >= 15:
-        refresh_encodings()  # Refresh encodings every 15 seconds
 
 @app.route('/')
 def home():

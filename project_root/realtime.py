@@ -4,11 +4,13 @@ import sqlite3
 import numpy as np
 import os
 
+project_root = '/Users/jonahballard/Documents/Computer-Orginization-Project1/project_root'
+db_path = os.path.join(project_root, 'facial_encodings.db')
 
 
 # Load encodings from the database
 def load_encodings_from_db():
-    db_path = os.path.join(os.getcwd(), 'facial_encodings.db')
+    
     conn = sqlite3.connect(db_path)
     cursor = conn.cursor()
     cursor.execute('SELECT image_name, encoding FROM encodings')
