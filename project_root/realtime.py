@@ -5,7 +5,7 @@ import numpy as np
 import os
 
 
-project_root = '../project_root'
+project_root = '../project_root/'
 
 db_path = os.path.join(project_root, 'facial_encodings.db')
 
