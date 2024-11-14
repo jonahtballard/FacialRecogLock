@@ -4,7 +4,7 @@ import sqlite3
 import numpy as np
 import os
 
-project_root = '/Users/jonahballard/Documents/Computer-Orginization-Project1/project_root'
+project_root = '/Computer-Orginization-Project1/project_root'
 db_path = os.path.join(project_root, 'facial_encodings.db')
 
 
