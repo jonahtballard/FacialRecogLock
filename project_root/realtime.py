@@ -4,7 +4,12 @@ import sqlite3
 import numpy as np
 import os
 
-project_root = '/Computer-Orginization-Project1/project_root'
+<<<<<<< HEAD
+project_root = 'User/jonahtballard/Documents/Computer-Orginization-Project1/project_root'
+=======
+
+project_root = 'project_root'
+>>>>>>> 3175caac53e64c882abacde2da08cadd91ed89be
 db_path = os.path.join(project_root, 'facial_encodings.db')
 
 
@@ -45,6 +50,7 @@ def generate_frames(known_face_encodings, known_face_names):
             matches = face_recognition.compare_faces(known_face_encodings, face_encoding)
             name = "Unknown"
             if True in matches:
+
                 first_match_index = matches.index(True)
                 name = known_face_names[first_match_index]
             face_names.append(name)
