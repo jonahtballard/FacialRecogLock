@@ -1,7 +1,7 @@
 import os
 import subprocess
 
-folder_path = "images/"
+folder_path = "project_root/images"
 
 
 def delete_images():
