@@ -4,12 +4,9 @@ import sqlite3
 import numpy as np
 import os
 
-<<<<<<< HEAD
-project_root = 'User/jonahtballard/Documents/Computer-Orginization-Project1/project_root'
-=======
 
 project_root = 'project_root'
->>>>>>> 3175caac53e64c882abacde2da08cadd91ed89be
+
 db_path = os.path.join(project_root, 'facial_encodings.db')
 
 
