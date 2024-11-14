@@ -4,7 +4,7 @@ import numpy as np
 import os
 
 # Folder containing images
-folder_path = "project_root/images/"
+folder_path = "../project_root/images/"
 db_path = os.path.join(folder_path, '../facial_encodings.db')
 
 # Connect to SQLite database (or create it if it doesn't exist)
