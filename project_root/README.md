@@ -38,3 +38,5 @@ This is all displayed in the local browser using a Flask app. In the flask app e
 6. Sqlite3 documentation used for the SQL database [here](https://docs.python.org/3/library/sqlite3.html)
 7. Setup and use outputs with RIP.GPIO [here](https://raspi.tv/2013/rpi-gpio-basics-5-setting-up-and-using-outputs-with-rpi-gpio)
 8. Diyables Arduino Solenoid Lock wiring and partial setup [here](https://arduinogetstarted.com/tutorials/arduino-solenoid-lock)
+9. Solenoid Lock setup to turn on and off [here](https://newbiely.com/tutorials/raspberry-pi/raspberry-pi-solenoid-lock)
+10. GPIO pin error issue [here](https://raspberrypi.stackexchange.com/questions/55143/gpio-warning-channel-already-in-use)
