@@ -8,11 +8,11 @@ This is all displayed in the local browser using a Flask app. In the flask app e
 ## Installation
 1. Clone the repository to your local machine:
     ```sh
-    git clone https://github.com/yourusername/Computer-Orginization-Project1.git
+    git clone https://github.com/yourusername/FacialRecogLock.git
     ```
 2. Navigate to the project directory:
     ```sh
-    cd Computer-Orginization-Project1
+    cd FacialRecogLock
     ```
 3. Install the required dependencies:
     ```sh
